@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+
+    <div class="container">
+        <form th:action="'/admin/add' + ${item}" method="post" th:object="${person}">
+            <div class="row">
+
+                <div class="col">
+                    <input type="text" class="form-control" name="firstName" placeholder="First name" th:attrappend="class=${#fields.hasErrors('firstName')} ? ' is-invalid' : ''" th:value="${person} ? ${person.firstName} : ''">
+                    <div th:if="${#fields.hasErrors('firstName')}">
+                        <p th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></p>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <input type="text" class="form-control" name="lastName" placeholder="Last name" th:attrappend="class=${#fields.hasErrors('lastName')} ? ' is-invalid' : ''" th:value="${person} ? ${person.lastName} : ''">
+                    <div th:if="${#fields.hasErrors('lastName')}">
+                        <p th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></p>
+                    </div>
+                </div>
+
+                <div th:if="${not #lists.isEmpty(groups)}" class="col form-group">
+                    <select class="form-control" name="group">
+                        <option th:each="group : ${groups}" th:value="${group.getId()}" th:text="${group.getName()}"></option>
+                    </select>
+                </div>
+
+                <input type="hidden" name="id" th:value="${personId}">
+
+                <div class="col">
+                    <button type="submit" class="btn btn-success mx-auto">Добавить</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="container card-columns">
+        <div th:each="person : ${persons}">
+            <div class="card m-2">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${person.getFullName()}"></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Some description about...</h6>
+                    <p th:text="${not #lists.isEmpty(groups)}?'Группа: ' + ${person.group.name}:''"></p>
+                    <a  th:href="'/admin/' + ${item} + '/' + ${person.getId()} + '/edit'" class="btn btn-success">Редактировать</a>
+                    <a th:href="'/admin/' + ${item} + '/' + ${person.getId()} + '/remove'" class="btn btn-warning">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

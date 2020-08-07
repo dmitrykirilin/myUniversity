@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+
+    <div class="container card-columns">
+        <div th:each="teacher : ${teachers}">
+            <div class="card m-2">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${teacher.getFullName()}"></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Some description about...</h6>
+                    <a  th:href="'/admin/teacher/' + ${teacher.getId()} + '/edit'" class="btn btn-success">Редактировать</a>
+                    <a th:href="'/admin/teacher/' + ${teacher.getId()} + '/remove'" class="btn btn-warning">Удалить</a>
+                </div>
+            </div>
+        </div>
+        <div class="card m-2">
+            <div class="card-body">
+                <a th:href="'/admin/teacher/add'" class="btn btn-success">Добавить</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

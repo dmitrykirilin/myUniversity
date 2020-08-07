@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+
+    <div class="card-columns">
+        <div th:each="teacher : ${teachers}">
+            <div th:object="${teacher}" class="card m-2">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="*{lastName}">Card title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="*{firstName}">Card subtitle</h6>
+                    <p class="card-text">Some description about...</p>
+                    <a th:href="'/teacher/' + *{id}" class="card-link">Расписание</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+
+    <div class="container">
+        <p>Регистрация нового пользователя.</p>
+        <div th:text="${message}"></div>
+        <form th:action="@{/registration}" method="post" th:object="${user}">
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"> Пользователь : </label>
+                <div class="col-sm-6">
+                    <input type="text" name="username" class="form-control" th:attrappend="class=${#fields.hasErrors('username')} ? ' is-invalid' : ''" th:value="${user} ? ${user.username} : ''"/>
+                    <div th:if="${#fields.hasErrors('username')}">
+                        <p th:each="err : ${#fields.errors('username')}" th:text="${err}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"> Пароль: </label>
+                <div class="col-sm-6">
+                    <input type="password" name="password" class="form-control" th:attrappend="class=${#fields.hasErrors('password')} ? ' is-invalid' : ''" th:value="${user} ? ${user.password} : ''"/>
+                    <div th:if="${#fields.hasErrors('password')}">
+                        <p th:each="err : ${#fields.errors('password')}" th:text="${err}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"> Повторите пароль: </label>
+                <div class="col-sm-6">
+                    <input type="password" name="passwordConfirm" class="form-control" th:attrappend="class=${passwordConfirmError} ? ' is-invalid' : ''" th:value="${user} ? ${user.password} : ''"/>
+                    <div th:if="${not #strings.isEmpty(passwordConfirmError)}" class="invalid-feedback">
+                        [[${passwordConfirmError}]]
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+    <div layout:fragment="replacing">
+
+        <div class="container">
+            <h4>Всего уроков: [[${countOfLessons}]]</h4>
+        </div>
+
+        <div th:each="daySchedule : ${schedule}" th:unless="${daySchedule.isEmpty() or daySchedule.get(0).size() == 0}">
+
+            <div class="container">
+                    <h3 th:text="${daySchedule.get(0).get(0).getDayOfWeek()}" class="my-2"/>
+            </div>
+            <div th:each="classSchedule : ${daySchedule}" th:if="${!classSchedule.isEmpty()}" class="container my-2">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col-1">#</th>
+                        <th colspan="4">[[${classSchedule.get(0).getClassroom().getNumber()}]]</th>
+                        <th th:if="${classSchedule.size() < 6}" scope="col"><a th:href="'/admin/addLesson?day=' + ${classSchedule.get(0).getDayOfWeek()} + '&classroom=' + ${classSchedule.get(0).classroom.id}" class="btn btn-success">Добавить урок</a></th>
+                        <th th:unless="${classSchedule.size() < 6}" scope="col"><a class="btn btn-secondary disabled">Добавить урок</a></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        <div th:each="lesson : ${classSchedule}">
+                            <tr>
+                                <th scope="col-1">[[${lesson.getLessonNumber()}]]</th>
+                                <td scope="col-2">[[${timeIntervals[lesson.getLessonNumber()-1].startTime()} + ' - ' + ${timeIntervals[lesson.getLessonNumber()-1].endTime()}]]</td>
+                                <td scope="col-3">[[${lesson.getCourse().getName()}]]</td>
+                                <td scope="col-2">[[${lesson.getGroup().getName()}]]</td>
+                                <td scope="col-3">[[${lesson.getTeacher().getFullName()}]]</td>
+                                <td scope="col-1"><a th:href="'/admin/editSchedule?day=' + ${lesson.getDayOfWeek()} + '&classroom=' + ${lesson.classroom.id} + '&lesson=' + ${lesson.getLessonNumber()}" class="btn btn-warning">Удалить</a></td>
+                            </tr>
+                        </div>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+
+    <div class="card-columns">
+        <div th:each="group : ${groups}">
+            <div class="card m-2">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${group.name}">Card title</h5>
+                    <p class="card-text">Список студентов:</p>
+                    <div th:each="student : ${@studentService.getStudentsByGroup(group.id)}">
+                        <h6 class="card-subtitle mb-2 text-muted" th:text="${student.getFullName()}"></h6>
+                    </div>
+                    <a th:href="'/group/' + ${group.id}" class="card-link">Расписание</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

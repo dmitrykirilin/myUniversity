@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+    <div class="container mt-2">
+        <h3 th:text="${classroom.getNumber()}"></h3>
+    </div>
+    <div class="accordion" id="accordion">
+        <div th:each="daySchedule : ${schedule}" th:if="${!daySchedule.isEmpty()}">
+
+            <div class="container my-2">
+                <a class="btn btn-primary" data-toggle="collapse" th:href="'#' + ${daySchedule.get(0).getDayOfWeek()}" role="button" aria-expanded="false" th:aria-controls="${daySchedule.get(0).getDayOfWeek()}">
+                    <h3 th:text="${daySchedule.get(0).getDayOfWeek()}" />
+                </a>
+            </div>
+
+            <div class="collapse container" data-parent="#accordion" th:id="${daySchedule.get(0).getDayOfWeek()}">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr th:each="lesson : ${daySchedule}">
+                            <td>[[${lesson.getLessonNumber()}]]</td>
+                            <td th:text="${timeIntervals[lesson.getLessonNumber()-1].startTime()} + ' - ' + ${timeIntervals[lesson.getLessonNumber()-1].endTime()}">[[${user.getRolesInString()}]]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

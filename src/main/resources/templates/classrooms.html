@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+
+    <div class="container">
+        <div class="list-group">
+            <div th:each="classroom : ${classrooms}">
+                <a type="button" th:href="'/classrooms/' + ${classroom.id}" class="list-group-item list-group-item-action">[[${classroom.number}]]
+                </a>
+            </div>
+            <a href="/classrooms/all" class="list-group-item list-group-item-action active">
+                Все свободные интервалы
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

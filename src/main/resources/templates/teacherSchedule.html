@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+    <div class="container mt-2">
+        <h3 th:text="${teacher.getFullName()}"></h3>
+    </div>
+    <div class="accordion" id="accordion">
+        <div th:each="daySchedule : ${schedule}" th:if="${!daySchedule.isEmpty()}">
+
+            <div class="container my-2">
+                <a class="btn btn-primary" data-toggle="collapse" th:href="'#' + ${daySchedule.get(0).getDayOfWeek()}" role="button" aria-expanded="false" th:aria-controls="${daySchedule.get(0).getDayOfWeek()}">
+                    <h3 th:text="${daySchedule.get(0).getDayOfWeek()}" />
+                </a>
+            </div>
+
+            <div class="collapse container" data-parent="#accordion" th:id="${daySchedule.get(0).getDayOfWeek()}">
+                <div class="row">
+                    <div th:each="lesson : ${daySchedule}" class="col-2 themed-grid-col">
+                        <div class="card text-white" th:attrappend="class=' ' + ${colorMap.get(lesson.course.id % 6 + 1)}" style="max-width: 18rem;">
+                            <div class="card-header" th:text="${lesson.course.name}"></div>
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${timeIntervals[lesson.getLessonNumber()-1].startTime()} + ' - ' + ${timeIntervals[lesson.getLessonNumber()-1].endTime()}"></h5>
+                                <p class="card-text" th:text="'Группа: ' + ${lesson.group.name}"></p>
+                                <small th:text="'Аудитория: ' + ${lesson.classroom.number}"></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+
+<div class="container justify-content-md-center mt-2">
+    <div th:if="${message != null}">
+        [[${message}]]
+    </div>
+
+
+    <form th:action="@{/admin/addLesson}" method="post">
+
+        <div class="form-group">
+            <label>День недели</label>
+            <input th:value="${day}" class="form-control" type="text" name="day" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>Аудитория</label>
+            <input th:value="${classroom}" class="form-control" type="text" name="classroom" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>Номер урока</label>
+            <select class="form-control" name="lesson">
+                <option th:each="lesson : ${numbersOfLessons}" th:text="${lesson}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Группа</label>
+            <select multiple class="form-control" name="group">
+                <option th:each="group : ${groups}" th:text="${group.getName()}" th:value="${group.getId()}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Предмет</label>
+            <select multiple class="form-control" name="course">
+                <option th:each="course : ${courses}" th:text="${course.getName()}" th:value="${course.getId()}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Преподаватель</label>
+            <select multiple class="form-control" name="teacher">
+                <option th:each="teacher : ${teachers}" th:text="${teacher.getFullName()}" th:value="${teacher.getId()}"></option>
+            </select>
+        </div>
+        <div class="row mx-auto">
+            <button type="submit" class="btn btn-success mx-auto">Submit</button>
+        </div>
+    </form>
+</div>
+
+
+</div>
+</body>
+</html>

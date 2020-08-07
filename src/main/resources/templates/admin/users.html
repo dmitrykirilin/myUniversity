@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Имя</th>
+                <th scope="col">Роль</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td>[[${user.username}]]</td>
+                <td>[[${user.getRolesInString()}]]</td>
+                <td><a th:href="'/users/' + ${user.id}">edit</a></td>
+                <td><div th:unless="${user.getUsername().equals(#httpServletRequest.remoteUser)}">
+                    <form th:action="'/users/' + ${user.id} + '/remove'">
+                        <button type="submit" class="btn btn-warning">Удалить</button>
+                    </form>
+                </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

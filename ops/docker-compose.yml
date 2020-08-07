@@ -1,0 +1,15 @@
+version: "3.1"
+
+services:
+  postgres-dk:
+    image: "postgres"
+    container_name: "postgres-dk"
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: university
+      POSTGRES_PASSWORD: 19900117
+      POSTGRES_USER: postgres
+#    volumes:
+#      - ~/postgres-volume:/var/lib/postgresql/data

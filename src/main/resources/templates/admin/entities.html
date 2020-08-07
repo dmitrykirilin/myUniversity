@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col-1"></th>
+                <th colspan="4">
+                    <form th:action="'/admin/add' + ${pageName}" method="post" th:object="${entity}">
+                        <div class="row">
+
+                            <div class="col">
+                                <input type="text" class="form-control" th:attrappend="class=${#fields.hasErrors('name')} ? ' is-invalid' : ''" th:value="${entity} ? ${entity.name} : ''" name="name" th:placeholder="${pageName.equals('courses')} ? 'Course name' : 'xx-00'">
+                                <div th:if="${#fields.hasErrors('name')}">
+                                    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                                    <!--                                <div class="row invalid-feedback" th:errors="*{name}"></div>-->
+                                </div>
+                            </div>
+
+                            <div th:if="${pageName.equals('courses')}" class="col form-group">
+                                <select class="form-control" name="hoursPerWeek" th:value="${hoursPerWeek}">
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                </select>
+                            </div>
+                            <input type="hidden" name="id" th:value="${itemId}">
+                            <div class="col">
+                                <button type="submit" class="btn btn-success mx-auto">Добавить</button>
+                            </div>
+                        </div>
+                    </form>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <th scope="col">#</th>
+                    <td scope="col">Название</td>
+                    <div th:if="${pageName.equals('courses')}">
+                        <td scope="col">Часов в неделю</td>
+                    </div>
+                    <td scope="col"></td>
+                    <td scope="col"></td>
+                </tr>
+
+            <div th:each="item : ${items}">
+                <tr>
+                    <th scope="col">[[${item.getId()}]]</th>
+
+                    <td scope="col">[[${item.getName()}]]</td>
+
+                    <div th:if="${pageName.equals('courses')}">
+                        <td scope="col">[[${item.getHoursPerWeek()}]]</td>
+                    </div>
+
+                    <td scope="col"><a th:href="'/admin/' + ${pageName} + '/' + ${item.getId()} + '/edit'" class="btn btn-warning">Изменить</a></td>
+
+                    <td scope="col"><a th:href="'/admin/' + ${pageName} + '/' + ${item.getId()} + '/remove'" class="btn btn-danger">Удалить</a></td>
+                </tr>
+            </div>
+
+            </tbody>
+        </table>
+
+</div>
+</body>
+</html>

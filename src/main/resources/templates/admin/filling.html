@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+
+    <div class="card-columns container">
+
+        <div th:if="${message != null}">
+            <h5>[[${message}]]</h5>
+        </div>
+
+        <form method="post" th:action="@{/admin/filling}">
+                        <div class="card m-1">
+                            <div class="card-body">
+                                    <h5 class="card-title">Аудитории</h5>
+                                    <input type="number" class="form-control" name="countOfClassrooms" th:value="${Classrooms.size()}"><br>
+                                    <div th:each="classroom : ${Classrooms}">
+                                        <h6 class="card-subtitle mb-2 text-muted" th:text="${classroom.getNumber()}"></h6>
+                                    </div>
+                            </div>
+                        </div>
+
+                    <div class="card m-1">
+                        <div class="card-body">
+                            <h5 class="card-title">Группы</h5>
+                            <input type="number" class="form-control" name="countOfGroups" th:value="${Groups.size()}"><br>
+                            <div th:each="group : ${Groups}">
+                                <h6 class="card-subtitle mb-2 text-muted" th:text="${group.getName()}"></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card m-1">
+                        <div class="card-body">
+                            <h5 class="card-title">Курсы</h5>
+                            <input type="number" class="form-control" name="countOfCourses" th:value="${Courses.size()}"><br>
+                            <div th:each="course : ${Courses}">
+                                <h6 class="card-subtitle mb-2 text-muted" th:text="${course.getName()}"></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card m-1">
+                        <div class="card-body">
+                            <h5 class="card-title">Студенты</h5>
+                            <input type="number" class="form-control" name="countOfStudents" th:value="${Students.size()}"><br>
+                            <div th:each="student : ${Students}">
+                                <h6 class="card-subtitle mb-2 text-muted" th:text="${student.getFullName()}"></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card m-1">
+                        <div class="card-body">
+                            <h5 class="card-title">Преподаватели</h5>
+                            <input type="number" class="form-control" name="countOfTeachers" th:value="${Teachers.size()}"><br>
+                            <div th:each="teacher : ${Teachers}">
+                                <h6 class="card-subtitle mb-2 text-muted" th:text="${teacher.getFullName()}"></h6>
+                            </div>
+                        </div>
+                    </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+
+            <div class="card m-1">
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-success mx-auto">Обновить</button>
+                            <a th:href="@{/admin/filling/preset}" class="btn btn-primary mt-2">Предустановленные настройки</a>
+                        </div>
+                    </div>
+            </form>
+    </div>
+</div>
+
+</body>
+</html>

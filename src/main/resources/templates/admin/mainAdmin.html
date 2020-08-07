@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home}">
+
+<body>
+
+<div layout:fragment="replacing">
+
+<div class="container">
+
+    <div class="container justify-content-md-center">
+        <div th:if="${message != null}">
+            [[${message}]]
+        </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Редактор университета</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a th:href="@{/admin/filling}">Наполнить университет</a></li>
+                        <li class="list-group-item"><a th:href="@{/admin/courses}">Курсы</a></li>
+                        <li class="list-group-item"><a th:href="@{/admin/groups}">Группы</a></li>
+                        <li class="list-group-item"><a th:href="@{/admin/teacher}">Преподаватели</a></li>
+<!--                        <li class="list-group-item"><a th:href="@{/admin/worker}">Уборщицы</a></li>-->
+                        <li class="list-group-item"><a th:href="@{/admin/student}">Студенты</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Редактор расписания</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a th:href="@{/admin/createSchedule}">Создать расписание автоматически</a></li>
+                        <li class="list-group-item"><a th:href="@{/admin/removeSchedule}">Удалить расписание</a></li>
+                        <li class="list-group-item"><a th:href="@{/admin/editSchedule}">Редактировать сушествующее расписание</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</body>
+</html>
